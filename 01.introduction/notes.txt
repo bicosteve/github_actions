@@ -27,3 +27,7 @@ NB:
 Jobs Parrallelism
 jobs can run in parralel or in series 
 use needs key which is an array of jobs which the current job depends on. 
+
+Actions 
+ this is code you write or someone writes to assist you do certain tasks
+ allows you to write less code in your workflows 

@@ -6,10 +6,24 @@ jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
+      - name: List Files
+        run: |
+          pwd
+          ls
       - name: Simple JS Action
         id: greet
         uses: actions/hello-world-javascript-action@v1
         with:
           who-to-great: John Doe # this is an input
       - name:
-        run: echo "${{ steps.greet.outputs.time }}"
+        run: echo "${{ steps.greet.outputs.time }}" # this output
+      - name:
+        uses: actions/checkout@v1
+      - name: List Files After Checkout
+        run: |
+          pwd
+          ls -a
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo $"${{ github.token }}" #used to authenticate the repo

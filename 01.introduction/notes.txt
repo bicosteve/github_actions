@@ -22,3 +22,8 @@ YAML format
 
 NB: 
  - to create a workflow in github, you need to create a folder called worflows inside another folder called .github where your yaml file will reside 
+ - the folder must be on the root of your project
+
+Jobs Parrallelism
+jobs can run in parralel or in series 
+use needs key which is an array of jobs which the current job depends on. 

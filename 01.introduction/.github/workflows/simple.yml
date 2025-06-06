@@ -3,6 +3,7 @@ name: Shell Commands
 on: [push]
 
 jobs:
+  # job one
   run-shell-command:
     runs-on: ubuntu-latest
     steps:
@@ -12,3 +13,18 @@ jobs:
         run: |
           node -v 
           npm -v
+      - name: python command
+        run: |
+          import platform 
+          print(platform.processor())
+        shell: python
+  # jobe two
+  run-windows-commands:
+    runs-on: windows-latest
+    needs: ['run-shell-command']
+    steps:
+      - name: Directory Powershell
+        run: Get-Location
+      - name: Directory Bash
+        run: pwd # step running commands
+        shell: bash

@@ -1,0 +1,41 @@
+# string
+name: Ali 
+# integer
+age: 29 
+# string
+address: "nairobi: Kenya"
+#boolean
+active: true
+# object notation 1 
+key:
+  key: value
+  key2: 33
+  # object
+  key3:
+    key: value
+    key2: valuetwo
+#object notation 2
+jsonobject: {key: value, key2: 33, key3: false}
+
+# array 
+array:
+  - item1 
+  - item2 
+  - {key: 45}
+
+#object arrays 
+jsonArray: [item1, item2]
+
+# long text 
+longText: >
+  wish was not there is something new 
+  which is not here but there is test 
+  which is not easy but there is somthing 
+  which has to be done since it depends
+
+#long text presever new lines 
+longTextNewLine: |
+  wish was not there is something new 
+  which is not here but there is test 
+  which is not easy but there is somthing 
+  which has to be done since it depends

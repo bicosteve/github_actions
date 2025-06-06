@@ -1,0 +1,24 @@
+Github action lets you automate software workflows
+Workflow is automated process you can set up in your repo to test, build, package,deploy and release
+Events are actions in your repo eg push, pull, issue
+Events trigger workflows 
+workflow can contain one or more jobs and each job work on its on vm
+
+Runner - any machine with github actions runner application installed
+Runner is responsible for running your jobs whenever an event happens and displays back the result. 
+Can be hosted by github or self hosted 
+
+
+Terms 
+Event - a push or a pull request, any that can happen on repo 
+Workflow - contains one job or more 
+Step - performs action like deploy, test code etc 
+
+YAML format 
+- contains key value pairs 
+- can all data types like strings, numbers, boolean etc 
+- strings which have colons must have quotations
+
+
+NB: 
+ - to create a workflow in github, you need to create a folder called worflows inside another folder called .github where your yaml file will reside 

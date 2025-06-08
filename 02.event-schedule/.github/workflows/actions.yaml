@@ -1,0 +1,66 @@
+name: Actions Workflow
+
+on:
+  # 1. trigger events on actions
+  # push:
+  pull_request:
+    types: [closed, assigned, opened, reopened]
+
+  # 2. trigger workflow on schedule - cron job
+  schedule:
+    - cron: '0 * * * *' # cron has mins,hours,day-of-month, month, day-of-week. * means any minute any day
+    # - cron : "1 * * * *" runs every first minute of every hour
+    # use crontab.guru for the meaning 20/15 from 20mins then interval of 15
+    # "0 12 * * *"
+
+  # 3. repository_dispatch
+  repository_dispatch:
+    types: [build]
+
+  # 4. Trigger workfowls by fitering tags, branches, paths
+  push:
+    branches:
+      - master
+      - 'feature/*' #matches anything which start with feature
+      - 'feature/**' # matches feature/eat/a
+      - '!feature/featC' # ignore this feature
+    branches-ignore:
+      # ignore these branches
+      - main
+      - dev
+    tags:
+      - v1.* # run branches with v1 tag
+    paths:
+      - '**.js' # only run when javascript files are pushed
+      - '!filename.js' # ignore this file
+    paths-ignore:
+      - 'docs/**' # do not run the workflow
+  # pull_request:
+  # branches:
+  # - master ** any pull_request to master branch will trigger workflow
+
+jobs:
+  run-github-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files
+        run: |
+          pwd
+          ls
+      - name: Simple JS Action
+        id: greet
+        uses: actions/hello-world-javascript-action@v1
+        with:
+          who-to-greet: John Doe # this is an input
+      - name: Print Greeting
+        run: echo "${{ steps.greet.outputs.time }}" # this output
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: List Files After Checkout
+        run: |
+          pwd
+          ls -a
+          echo $GITHUB_SHA
+          echo $GITHUB_REPOSITORY
+          echo $GITHUB_WORKSPACE
+          echo "${{ github.token }}" #used to authenticate the repo

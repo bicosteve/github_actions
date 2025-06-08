@@ -14,7 +14,7 @@ jobs:
         id: greet
         uses: actions/hello-world-javascript-action@v1
         with:
-          who-to-great: John Doe # this is an input
+          who-to-greet: John Doe # this is an input
       - name:
         run: echo "${{ steps.greet.outputs.time }}" # this output
       - name:

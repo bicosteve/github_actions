@@ -1,0 +1,17 @@
+1. Setting environment variables is on the code 
+
+
+2. Encrypting environment variables 
+steps: 
+    - go to repo settings 
+    - click on secrets 
+    - click on 'Add secrets' 
+    - add name, add value 
+    - click 'add' button 
+
+It will be available on object called secrets 
+On the environment add 
+  env:
+   NAME: ${{secrets.SECRET_NAME}}
+
+NB: GITHUB_TOKEN is available without being stored in the secrets

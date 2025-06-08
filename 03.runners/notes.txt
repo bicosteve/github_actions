@@ -1,0 +1,36 @@
+- these are machines that execute jobs in a workflow
+- runners are computers on github cloud 
+- they can install softwares, clone repos and run commands.
+- these machines can be ubuntu, windows, macOS
+- each workflow runs in a fresh newly provisioned virtual machines 
+- 
+
+Two types 
+- github hosted runners 
+- self hosted runners 
+
+1. Github Hosted Runners 
+- you can pick the runner depending on OS and the version of the os 
+example 
+
+name: 'Github Workflow Demo'
+
+on: workflow_dispatch
+
+jobs:
+    sayHello:
+        runs-on: macos-10.15
+        steps:
+        - name: 
+          run: 
+
+2. Self Hosted 
+- a system that you deploy and manage to execute jobs from Github Actions 
+
+Advantages
+- software dependancy
+- vm size and configurations 
+- secure access & network
+- large workloads support 
+
+You can add self-hosted runner in an enterprise

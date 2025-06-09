@@ -48,3 +48,14 @@ jobs:
     steps:
       - name: Echo my name
         run: echo "How di there, "
+
+  decrypt-secret-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Decript File
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output $HOME/secret.json --my_secret.json.gpg
+        env:
+          PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
+      - name: Print File Content
+        run: cat $HOME/secret.json

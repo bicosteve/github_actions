@@ -1,0 +1,13 @@
+Infrastructure as a code assists in deployment of applications quickly
+Uses versioning and descriptive model to define and deploy Infrastructure
+define all infrastructure as version-controlled text files 
+automates deployment and provisioning
+
+Advantages
+- enforces consistency
+- idepotence provided same conditions always 
+- faster in speed and consistency 
+
+How ?
+- identify sofware tool 
+- 

@@ -31,4 +31,16 @@ EXPRESSION CONTEXT
 - this is an expression ${{secrets.PASSPHRASE}}
 - expression can have numbers, string, booleans, floats, operators (<>), even functions 
 - github provide these functions and result can be passed to some key in yaml file.
-- 
+- the objects {{}} are called contexts they can be secret context, github context etc, 
+
+FUNCTIONS ON WORKFLOWS
+- toJson()
+- there other many functions
+- endsWith()
+- startsWith()
+- contains()
+- format()
+
+JOB STATUS FUNCTIONS 
+- returns information about your job 
+- can have a key `if`

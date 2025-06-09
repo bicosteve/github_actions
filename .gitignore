@@ -1,2 +1,7 @@
 /04.environtment-variables/my_secret.json
 my_secret.json
+node_modules/
+build
+coverage
+node_modules
+package-lock.json

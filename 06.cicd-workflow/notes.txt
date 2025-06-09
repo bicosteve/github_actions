@@ -1,0 +1,10 @@
+Use surge to deploy a static page 
+
+login with surge login 
+logout with surge logout 
+
+- provide app name --> feigned-wilderness.surge.sh
+- use prettier to check with --> npx prettier --check "**/*.js"
+- use prettier to format with --> npx prettier --write "**/*.js"
+- another check prettier --check \"**/*.{js,jsx, yml,yaml, json,css, scss, md}\"
+- another format prettier --write \"**/*.{js,jsx, yml,yaml, json,css, scss, md}\" 

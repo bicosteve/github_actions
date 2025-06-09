@@ -24,3 +24,11 @@ COMMAND TO ENCRYPT A FILE
 gpg --symmetric --cipher-algo AES256 <file_name>
 - You will need a passphrase which will also be used to decrypt your file 
 - Should be sent with to your repo and be decript in one of your jobs 
+
+
+
+EXPRESSION CONTEXT
+- this is an expression ${{secrets.PASSPHRASE}}
+- expression can have numbers, string, booleans, floats, operators (<>), even functions 
+- github provide these functions and result can be passed to some key in yaml file.
+- 

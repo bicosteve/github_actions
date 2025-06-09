@@ -15,3 +15,12 @@ On the environment add
    NAME: ${{secrets.SECRET_NAME}}
 
 NB: GITHUB_TOKEN is available without being stored in the secrets
+
+NB: Github only allows upto a certain secret size therefore you need to come up with a way to store your secret on a file.
+- You can use json file, encrypt it then decrypt it on githhub.
+- Use GPG to encrypt the file then decrypt them in github.
+
+COMMAND TO ENCRYPT A FILE 
+gpg --symmetric --cipher-algo AES256 <file_name>
+- You will need a passphrase which will also be used to decrypt your file 
+- Should be sent with to your repo and be decript in one of your jobs 

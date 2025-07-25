@@ -1,0 +1,13 @@
+<-All files \* @username->
+
+- @bico
+
+<-Specific files .js for example->
+
+\*.js @bico
+
+\*.yml @vincent
+
+<!-- folder @ownners -->
+
+/public/ @someowner

@@ -1,0 +1,15 @@
+The Components
+
+* Event : everything starts with an event eg pull request, push, issue(created,closed)
+
+* Workflow : events are tied to work flows are they trigger workflow. Each workflow should have atleast one job.
+
+* Job : jobs is composed of one or more steps . 
+
+* Step : Each step could either be an action or a shell command. Action is a code which is designed to do something 
+
+* Runner : a compute engine that can be connected to github. Steps are dispatched to runners once the action starts.
+
+** Runners can be github hosted or self hosted runners.
+
+# You should have .github folder

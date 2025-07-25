@@ -1,0 +1,27 @@
+name: Hello World Workflow
+
+# events that triggers this workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    # creates a button on the UI to assist in running the workflow
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # action created by github or any other 3rd party
+      - name: hello world
+        run: echo "Hello World"
+        shell: bash
+  goodbye:
+    runs-on: ubuntu-latest
+    steps:
+      - name: goodbye world
+        run: echo "Goodbye world"
+        shell: bash

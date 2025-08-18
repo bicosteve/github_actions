@@ -10,8 +10,76 @@ Can be hosted by github or self hosted
 
 
 Terms 
-Event - a push or a pull request, any that can happen on repo 
-Workflow - contains one job or more 
+**Event** - anything that can happen on repo and triggers a workflow. They can be push, pull_request,release, label, issues, milestone, and label. 
+
+# Demo 
+on: 
+  issues:
+    types: [opened,edited,milestoned]
+  pull_request:
+    types:
+      - opened 
+    branches:
+      - 'releases/**'
+      - 'feat/**'
+
+**Jobs** - these are grouped tasks that run together on the same machine aka runner.
+- As part of workflow, they can be one or more in a workflow.
+- A job can have one or more steps with the steps being executed in order, sequentially on the same runner. 
+- A step can be a shell command eg `pip install -r requirements.txt` 
+- A step can also be an `action` which is a reusable code often from Github Market place. eg `uses: actions/checkout@v4`
+- Each job have to run on a runner where it will be executed. 
+- Steps on a job can easily share dta since they run on the same runner
+- Jobs run in parrallel and isolation that is each job gets a new instance of the runner making them not interfere with each other. 
+- You can configure jobs to have dependancies on each other  eg job_one will `need` job_two.
+- Jobs can also produce artificats which is outputs which can be utilized by then next job in the same workflow or other workflows. 
+
+# Demo job 
+name: Build & Test 
+
+on:
+  push:
+    branches:
+      - main 
+      - feat/**
+env:
+  NODE_VERSION_GLOBAL: '20.x' # global env 
+jobs:
+  build-job:
+    name: Build Application & Dependancies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code 
+        uses: actions/checkout/v4 
+      - name: Set up Nodejs
+        uses: actions/setup-node@v4 
+        with: 
+          node-version: ${{ env.NODE_VERSION_GLOBAL }} # using env 
+      - name: Install dependancies
+        run: npm install 
+      - name: Build Project 
+        run: npm run build 
+  test-job:
+    needs: [build-job]
+    name: Testing Application 
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Cloning the repo
+        uses: actions/checkout@v4 
+      - name: Set up nodejs 
+        uses: actions/setup-node@v4 
+        with:
+          node-version: ${{ env.NODE_VERSION_GLOBAL }}
+      - name: Install dependancies 
+        run: npm install 
+      - name: Test code 
+        run: npm test 
+
+**Runners** - these are servers that execute workflows when triggered. Each runner can handle one job at a time. They can be ubuntu, windows, and macos.
+- There can be multiple runners in a job and these must be put in an array 
+- runs-on: [ubuntu-latest,windows-latest, macos-latest]
+
+**Workflow** - contains one job or more 
 Step - performs action like deploy, test code etc 
 
 YAML format 
@@ -21,7 +89,7 @@ YAML format
 
 
 NB: 
- - to create a workflow in github, you need to create a folder called worflows inside another folder called .github where your yaml file will reside 
+ - to create a workflow in github, you need to create a folder called workflows inside another folder called .github where your yaml file will reside 
  - the folder must be on the root of your project
 
 Jobs Parrallelism

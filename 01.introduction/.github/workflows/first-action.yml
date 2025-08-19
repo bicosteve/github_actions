@@ -1,0 +1,16 @@
+name: Test Workflow
+
+# when the workflow should be executed
+on: [workflow_dispatch] # triggers manually
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+    # Steps to be executed
+    steps:
+      - name: Print Greeting # steps must have names and can have ids
+        id: greet
+        run: echo "Hello, World"
+      - name: Print Bye
+        id: bye
+        run: echo "Bye, World"

@@ -10,6 +10,11 @@ Can be hosted by github or self hosted
 
 
 Terms 
+
+**Workflows**
+- workflows are attached to github repository and a given repository can have more than one workflow. 
+- workflow includes one or more jobs
+
 **Event** - anything that can happen on repo and triggers a workflow. They can be push, pull_request,release, label, issues, milestone, and label. 
 
 # Demo 
@@ -80,7 +85,10 @@ jobs:
 - runs-on: [ubuntu-latest,windows-latest, macos-latest]
 
 **Workflow** - contains one job or more 
-Step - performs action like deploy, test code etc 
+
+**Step** 
+- they can be shell scripts or action
+- performs action like deploy, test code etc 
 
 YAML format 
 - contains key value pairs 

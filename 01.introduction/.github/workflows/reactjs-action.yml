@@ -1,9 +1,9 @@
 name: React Action Workflow #workflow name
 
-on: push # trigger
+on: [push, workflow_dispatch] # trigger
 
 jobs:
-  test: # job
+  test: #1st  job
     runs-on: ubuntu-latest
     steps:
       - name: Get the code from repository
@@ -18,3 +18,23 @@ jobs:
         run: npm ci
       - name: Run Tests
         run: npm test
+  deploy:
+    needs: test # deploy job will wait for test job to finish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        id: get-code
+        uses: actions/checkout@v4
+
+      - name: Install Nodejs
+        id: install-node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependancies
+        run: npm ci
+      - name: Build Project
+        id: build-project
+        run: npm run build
+      - name: Deploy to server
+        run: echo 'Deploy'

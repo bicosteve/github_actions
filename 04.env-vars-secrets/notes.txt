@@ -1,4 +1,21 @@
-1. Setting environment variables is on the code 
+** Environment Variables **
+- certain values are dynamic in the code
+- eg db connection password
+- values for environment variables can be set in github 
+- values can also be provided on .yml file at workflow level
+- workflow level env will be available for all the jobs in the workflow
+- eg 
+env: 
+  MONGO_DB_NAME: gha-demo 
+- you can also set environment variable at job level 
+jobs:
+  test:
+    env:
+      MONGO_DB_CLUSTER: 'something something' 
+      MONGO_USERNAME: bix 
+      MONGO_PASSWORD: example@123
+- env values on job level are only accessible to the specific job 
+
 
 
 2. Encrypting environment variables 

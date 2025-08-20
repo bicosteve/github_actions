@@ -1,0 +1,24 @@
+** Job Data & Outputs ** 
+- working with artifacts 
+- working with job outputs 
+- caching dependancies 
+
+
+** Job Artifacts **
+- artifacts are output files or folders 
+- typically used for sharing log files, app binaries etc 
+- you can save the files and folders created by workflows or jobs 
+- you can download them and use them manually
+- you can also download them and use them in other jobs 
+
+
+** Job Outputs ** 
+- Outputs are simple values that can be reused in other jobs eg name, text, number etc 
+- eg name of file generated in previous build step can be reused somewhere else.
+- jobs can produce outputs 
+
+
+** Dependancy Caching **
+- Used to cache dependancies which are reused 
+- can be cached across different jobs and across workflows 
+- 

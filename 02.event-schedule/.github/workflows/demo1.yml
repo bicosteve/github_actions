@@ -1,0 +1,37 @@
+name: Events Demo 1
+on:
+  pull_request:
+    types:
+      # this is activity type of this event (pull_request) that trigger this workflow
+      # opened is an event activity
+      - opened
+    branches:
+      - main
+  workflow_dispatch:
+  push:
+    branches:
+      # filters in action
+      - main
+      - 'feat/**'
+      - 'dev-*'
+    paths:
+      # another filters in action
+      - '**.js'
+      - '**.py'
+      # you can use paths_ignore to ignore files eg paths_ignore - '.github/workflow/*'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Event Data
+        run: echo "${{ toJson(github.event) }}"
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Install dependancies
+        run: npm ci
+      - name: Test Code
+        run: npm run test
+      - name: Build code
+        run: npm run build
+      - name: Deploy project
+        run: echo "Deploying ..."

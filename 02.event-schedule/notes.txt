@@ -1,1 +1,38 @@
-Action can be triggered because of different activities like push or even pull reuquest
+Action can be triggered because of different activities like push or even pull reuquest which are called events. 
+- There are many event triggers. 
+- The event triggers can be;
+1. Repository Related 
+    - push : pushing a commit 
+    - pull_request : pull request action like opened, closed etc 
+    - create : a branch or tag was created 
+    - fork : repository was forked 
+    - issue : an issue was opened, deleted 
+    - issue_comment : issue or pull request comment action 
+    - watch : repository was starred 
+    - discussion : disucssion action eg created, deleted, 
+    - etc 
+2. Other 
+    - workflow_dispatch : manually trigger workflow 
+    - repository_dispatch : REST API request triggers workflow 
+    - schedule : workflow is scheduled 
+    - workflow_call : can be called by other workflows 
+
+**Event Activity Types & Filters**
+- you can add event configs and filters 
+- other events have activity types 
+- eg pull_request has opened, closed, edited activity types 
+- event can also have fitlers which give more detailed control over a workflow 
+- push event have filters based on target branch 
+
+**Event Filters** 
+- you can filter which event does something on your workflow. 
+- this is where filters come in. 
+- filters can be on branches on certain triggers 
+
+**Cancelling & Skipping Workflow Runs**
+- when jobs fail, workflows get canceled 
+- jobs fail if atleast one step fails 
+- can also be canceled manually  by clicking on 'Cancel Workflow' button. 
+- You can also skip a workflow 
+- can be done on push and pull_request
+- add commit messages with '....[skip ci]' to skip workflow trigger.

@@ -1,0 +1,5 @@
+** What is a container ? **
+- these are docker containers 
+- these are packages that contain code as well as the environment needed to build the code.
+- these are reproducible execution environment & results 
+- 

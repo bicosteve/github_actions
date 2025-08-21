@@ -1,0 +1,36 @@
+- The default work flow is once one step fails, the whole workflow stops 
+- but you can control how the workflow behaves when one step fails or succeeds 
+- 
+
+** Conditional Jobs & Steps ** 
+- there are two tools for that 
+1. if field on job and step Conditional execution
+2. continue-on-error field 
+
+
+** Special Conditional Functions ** 
+- github action has four special conditional functions which you can use in your workflow 
+1. failure() -> always return true when any of previous steps fail
+2. success() -> returns true when none of the previous steps fail 
+3. always() -> causes the step to always execute, even when cancelled 
+4. cancelled() -> returns true if the workflow has been cancelled 
+
+NB: if field is also available on job level
+
+
+** Continue on Error **
+- continue-on-error means that even if a step fails, it should not stop the next steps or jobs to execute. 
+- 
+
+
+** Matrix Jobs **
+- matrix means, you can run the same job with different configuration like runners etc at the same time
+- can be operating system, language version etc 
+NB: when using matrix,  if one job fails, all the remaining jobs will be suspended. 
+- to avoid this, use continue-on-error: true 
+
+** Reusable Workflow ** 
+- you can reuse a workflow in other workflows 
+- example is when you have a workflow that uploads/deploys code to a server, your can reuse it somewhere else.
+- to make workflow reusable, it must be callable by other workflows 
+- 

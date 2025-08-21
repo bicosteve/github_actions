@@ -1,0 +1,113 @@
+name: Deploy Website
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache dependancies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependancies
+        if: steps.cache.outputs.cache-hit != 'true'
+        # run this if node_modules were cached
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache dependancies # must be done before the files are produced
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install Dependancies
+        run: npm ci
+      - name: Lint Code
+        run: npm run lint
+      - name: Test Code
+        continue-on-error: true
+        id: test-code
+        run: npm run test
+      - name: Upload test report
+        if: failure() && steps.test-code.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    # outputs
+    outputs:
+      script-file:
+        ${{ steps.publish.outputs.script-file }}
+        # you will use this to access output value
+        # use steps defined by github
+        # id from steps defined by user
+        # outputs defined by github
+        # script-file from publish job defined by user
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache dependancies # must be done before the files are produced
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{ hashFiles('**/package-lock.json')}}
+      - name: Install Dependancies
+        run: npm ci
+      - name: Build Website
+        run: npm run build
+      - name: Publish JS filename
+        id: publish
+        run: find dist/assest/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
+      - name: Store/Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-files # name is upto you
+          path: |
+            dist 
+            package.json
+          # just example for multiple files
+          # | is multiline
+          # these files will be part of artifacts and can be downloaded
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files # ensure you download the right artifacts and unzip it and be available in this job
+      - name: Output contents
+        run: ls
+      - name: Output filename
+        run: echo "${{ needs.build.outputs.script-file }}"
+        # passing data between jobs
+      - name: Deploy App
+        run: echo "Deploying app ..."
+  deploy-reusable:
+    needs: build
+    uses: ./.github/workflows/resuable.yml # the path to reusable workflow
+  report:
+    needs: [build, test, deploy]
+    if: failure()
+    # returns true if any other job fails then this job will run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Information
+        run: |
+          echo "Something went wrong"
+          echo "${{ toJson(github)  }}"

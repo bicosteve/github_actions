@@ -13,7 +13,7 @@ jobs:
   test:
     env:
       MONGO_DB_CLUSTER: cluster0.something.mongodb.tests
-      MONGO_USERNAME: bix
+      MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
       MONGO_PASSWORD: example@123
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,8 @@ jobs:
       - name: Run Tests
         run: npm test
       - name: Output Information
-        run: echo "MONGO_DB_USERNAME ${{ env.MONGO_USERNAME }}"
+        run: |
+          echo "MONGO_DB_USERNAME ${{ env.MONGO_USERNAME }}"
   deploy:
     needs: test
     runs-on: ubuntu-latest

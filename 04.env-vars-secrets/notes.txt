@@ -16,6 +16,40 @@ jobs:
       MONGO_PASSWORD: example@123
 - env values on job level are only accessible to the specific job 
 
+** Secrets ** 
+- some values should not be exposed 
+- github allows you to store secrets such that no one can see them 
+- secrets can be stored in various levels 
+ 1. organization secrets 
+ 2. repository secrets
+ 3. Environment secrets 
+
+These are placed on secrets > actions 
+- these can be repository secret, 
+NB: once stored, the values can only be updated but not viewed!
+    cannot also be printed on the workflow.  
+
+can be accessed by github actions expression syntax using secret context 
+env: 
+  MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+
+
+*** Environment Secrets *** 
+- workflows jobs can target environments secrets 
+- you can add special protection rules. 
+- add environments secrets on settings > environment 
+- from there you can add environment specific secrets 
+- to use the environment secrets, use environment not env on the job 
+- eg 
+jobs:
+  test:
+    environment: testing
+      env: MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+NB: you can add rules to the environment on who, time, and which branch can trigger the use of variables and secrets in this specific environment. 
+
+      
+
+
 
 
 2. Encrypting environment variables 

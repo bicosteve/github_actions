@@ -2,4 +2,14 @@
 - these are docker containers 
 - these are packages that contain code as well as the environment needed to build the code.
 - these are reproducible execution environment & results 
+- containers give you full control over the environment & installed software.
+- you can run containers on github action runners.
+- steps are executed inside containers 
+- you can also run services inside containers
 - 
+
+** Service Containers ('Services') **
+- this provides solution where tests should not manipulate production database.
+- you can use a testing database instead
+- testing database server can be run inside a container 
+- this is what github action service container is all about.

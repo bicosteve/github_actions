@@ -1,0 +1,61 @@
+name: Deployment (Container)
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+env:
+  CACHE_KEY: node-deps
+  MONGODB_NAME: gha-demo
+jobs:
+  test:
+    environment: testing
+    runs-on: ubuntu-latest
+    # using container
+    container:
+      image:
+        node:16
+        # nest env if needed and will be used by image of the container
+    env:
+      MONGODB_CONNECTION_PROTOCOL: mongodb+srv
+      MONGODB_CLUSTER_ADDRESS: cluster0.ntrwp.mongodb.net
+      # if your job run in the container, use service label since containers will have a network
+      # you will not need protocol and cluster address when the network is created.
+      # if the container does not exist, use localhost (127.0.0.1:27017)
+      # add ports field on services and map the port to the runners port like this -27017:27017
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
+      PORT: 8080
+    # adding service container
+    services:
+      mongodb:
+        # name mongodb could be anything
+        # you need keys defined by github actions
+        image: mongo # services run on images
+        # ports:
+        #     - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Cache dependancies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package.json')}}
+      - name: Install dependancies
+        run: npm ci
+      - name: Run server
+        run: npm start && npx wait-on http://127.0.0.1:$PORT
+      - name: Run tests
+        run: npm test
+      - name: Output Information
+        run: |
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest

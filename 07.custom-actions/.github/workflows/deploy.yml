@@ -1,0 +1,61 @@
+name: Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Load & Cache Dependancies
+        id: cache-deps
+        uses: ./.github/actions/cached-deps # composite custom action in use
+        with:
+          caching: 'false'
+          # disables caching on lint job
+          # caching name comes from custom action inputs
+      - name: Output information
+        # printing outputs from cache-deps steps output using the used-cache var
+        run: echo "Cache used ${{ steps.cache-deps.outputs.used-cache }}"
+      - name: Lint Code
+        run: npm run lint
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Load & Cache Depandancies
+        uses: ./.github/actions/cached-deps
+      - name: Test Code
+        id: run-tests
+        run: npm run test
+      - name: Upload test report
+        if: failure() && steps.run-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v4
+      - name: Load & Cache Dependancies
+        uses: ./.github/actions/cached-deps
+      - name: Build Website
+        run: npm run build
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: ./dist
+      - name: Output Contents
+        run: ls
+      - name: Deploy site
+        run: echo 'Deploying ...'

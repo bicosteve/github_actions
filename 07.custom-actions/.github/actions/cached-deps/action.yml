@@ -1,0 +1,36 @@
+name: 'Get & Cache Dependancies'
+# custom actions do not contain on: key 
+# they do not need a trigger 
+description: "Get the Dependancies and cache them via npm"
+
+# using custom inputs in your actions
+inputs:
+  # have name of your choice 
+  caching: 
+    description: 'Whether to cache dependancies or not'
+    required: false 
+    default: 'true'
+
+# outputs
+outputs:
+  used-cache:
+    description: 'Cache was used'
+    value: ${{ steps.install.outputs.cache }} # values must refer to the steps with the ids
+
+runs: 
+ using: 'composite' # must be composite
+ steps:
+  - name: Cache Dependancies
+    if: inputs.caching == 'true'
+    id: cache
+    uses: actions/cache@v3
+    with:
+      path: node_modules
+      key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
+  - name: Install dependancies
+    id: install 
+    if: steps.cache.outputs.cache-hit != 'true' || inputs.caching != 'true'
+    run: 
+     npm ci
+     echo "::set-output name=cache::'${{ inputs.caching }}'"
+    shell: bash  # must be added when using run on composite actions

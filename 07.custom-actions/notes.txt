@@ -1,0 +1,18 @@
+Custom Actions 
+- why custom actions ?
+1. simplify various steps in your workflow 
+2. reuse the action on multiple jobs 
+3. if there is no existing public actions for your workflow 
+
+** Types of custom actions ** 
+- there are 3 types 
+- javascript actions, docker actions, composite actions. 
+- javascript actions uses javascript and node 
+- docker action uses Dockerfile with configurations 
+- composite action combines multiple workflow steps in one single action
+- composite actions are great for grouping steps used in workflows.
+- no extra skills are required
+
+** Composite Actions **
+- can be created on different github repositories
+- can also be created on the same repo

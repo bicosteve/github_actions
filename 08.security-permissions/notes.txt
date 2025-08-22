@@ -1,0 +1,35 @@
+** Workflow Security ** 
+- 
+
+** Script Injection ** 
+- a value set outside your workfolw that is used in your workflow 
+- workflow can be changed from outside 
+- use environment variables to defend against script injections
+- use official actions instead of writing your scripts 
+
+
+** Malicious Third Party Actions 
+- can perform any kind of logic in the workflow which can steal your secrets or harm your code base 
+- you can write your own actions but this is considerable efforts.
+- use actions by verified creators. 
+- public actions have lowest level of security
+
+** Permission Issues ** 
+- avoid overly permissive permissions by having right permission assigned to your workflow 
+NB: permissions are managed at job level and workflow level 
+NB: for a single job, write them at job level 
+- permissions can be read, write, 
+** Github Secrets **
+- secrets.GITHUB_TOKEN is generated automatically by github for authentication 
+- used to prevent anyone to make request to our repos without permission 
+- only valid when jobs are running 
+- can make request to github api 
+- 
+
+** Third party access for other services **
+- use open id connect to access third party services 
+- github actions request permission from the third party and is only valid for a short time
+- it is only valid for the actions to be performed.
+- can be done for cloud,dockerhub etc 
+
+NB: Read on Open ID Connect 
